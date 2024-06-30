@@ -14,4 +14,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/dev.sigstore/sigstore-java -->
+        <dependency>
+            <groupId>dev.sigstore</groupId>
+            <artifactId>sigstore-java</artifactId>
+            <version>0.10.0</version>
+        </dependency>
+
+    </dependencies>
+
 </project>
