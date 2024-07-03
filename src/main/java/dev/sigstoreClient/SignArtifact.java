@@ -6,13 +6,13 @@ import dev.sigstore.bundle.Bundle;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class signArtifact {
+public class SignArtifact {
     // funcy is functionary
     private KeylessSigner funcy;
     public Bundle result;
     Path testArtifact;
 
-    public signArtifact(String Path) {
+    public SignArtifact(String Path) {
         this.testArtifact = Paths.get(Path);
     }
 
