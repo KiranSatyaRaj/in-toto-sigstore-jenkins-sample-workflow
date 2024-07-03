@@ -1,0 +1,16 @@
+{
+  "signed": {
+    "materials": {
+      "foo.py": {
+        "sha256": "36a3d44e95493e5621c670363dc71780f08da29f8020b7c90a1579eba06eac00"
+      }
+    },
+    "products": {},
+    "byproducts": {},
+    "environment": {},
+    "command": [],
+    "name": "step",
+    "_type": "link"
+  },
+  "signatures": []
+}
