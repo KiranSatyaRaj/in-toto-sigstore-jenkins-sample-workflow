@@ -24,14 +24,29 @@ public class GenerateLink {
         if (filePaths == null) {
             materials = new HashMap<>();
         } else {
-            materials = new HashMap<>();
-            String[] filenames = setFileName(filePaths);
-            for (int i = 0; i < filePaths.length; i++) {
-                Artifact.ArtifactHash artifactHash = new Artifact(filePaths[i]).getArtifactHashes();
-                materials.put(filenames[i], artifactHash);
-            }
-            this.link.setMaterials(materials);
+            materials = setArtifacts(filePaths);
         }
+        this.link.setMaterials(materials);
+    }
+
+    public void setProducts(@NotNull String[] filePaths) {
+        HashMap<String, Artifact.ArtifactHash> products;
+        if (filePaths == null) {
+            products = new HashMap<>();
+        } else {
+            products = setArtifacts(filePaths);
+        }
+        this.link.setProducts(products);
+    }
+
+    private @org.jetbrains.annotations.NotNull HashMap<String, Artifact.ArtifactHash> setArtifacts(String[] filePaths) {
+        HashMap<String, Artifact.ArtifactHash> artifacts = new HashMap<>();
+        String[] filenames = setFileName(filePaths);
+        for (int i = 0; i < filePaths.length; i++) {
+            Artifact.ArtifactHash artifactHash = new Artifact(filePaths[i]).getArtifactHashes();
+            artifacts.put(filenames[i], artifactHash);
+        }
+        return artifacts;
     }
 
     public HashMap<String, Artifact.ArtifactHash> getMaterials() {
