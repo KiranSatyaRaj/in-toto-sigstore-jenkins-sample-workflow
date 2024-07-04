@@ -20,12 +20,18 @@ public class GenerateLink {
     }
 
     public void generateMaterials(@NotNull String[] filePaths) {
-        String[] path = filePath.split("/");
-        String filename = path[path.length - 1];
-        HashMap<String, Artifact.ArtifactHash> materials = new HashMap<>();
-        Artifact.ArtifactHash artifactHash = new Artifact(filePath).getArtifactHashes();
-        materials.put(filename, artifactHash);
-        this.link.setMaterials(materials);
+        HashMap<String, Artifact.ArtifactHash> materials;
+        if (filePaths == null) {
+            materials = new HashMap<>();
+        } else {
+            materials = new HashMap<>();
+            String[] filenames = setFileName(filePaths);
+            for (int i = 0; i < filePaths.length; i++) {
+                Artifact.ArtifactHash artifactHash = new Artifact(filePaths[i]).getArtifactHashes();
+                materials.put(filenames[i], artifactHash);
+            }
+            this.link.setMaterials(materials);
+        }
     }
 
     public HashMap<String, Artifact.ArtifactHash> getMaterials() {
@@ -47,11 +53,17 @@ public class GenerateLink {
     }
 
     @Contract(pure = true)
-    private String[] setFileName(String @org.jetbrains.annotations.NotNull [] filePaths) {
+    private String @org.jetbrains.annotations.NotNull [] setFileName(String @org.jetbrains.annotations.NotNull [] filePaths) {
         String[] filenames = new String[filePaths.length];
-        for (String filePath: filePaths) {
-
+        for (int i = 0; i < filePaths.length; i++) {
+            String[] Path = filePaths[i].split("/");
+            String fileName = Path[Path.length - 1];
+            filenames[i] = fileName;
         }
+        return filenames;
+    }
+
+    public void setSignature() {
     }
 
 }
