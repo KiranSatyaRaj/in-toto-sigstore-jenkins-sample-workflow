@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         GenerateLink link = new GenerateLink();
-        link.generateMaterials("/home/regulusnemea/foo.py");
+        link.generateMaterials(new String[]{"/home/regulusnemea/foo.py"});
         link.dump();
         String s = link.dumpString();
         System.out.println(s);
