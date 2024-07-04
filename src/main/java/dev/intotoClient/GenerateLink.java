@@ -7,11 +7,12 @@ import org.jetbrains.annotations.Contract;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("deprecated")
-public class GenerateLink {
+public class GenerateLink extends Link {
     @SuppressWarnings("deprecation")
     private final Link link;
 
@@ -78,7 +79,27 @@ public class GenerateLink {
         return filenames;
     }
 
+    public void setCommands(ArrayList<String> commands) {
+        this.link.setCommand(commands);
+    }
+
+    public void setByProducts() {
+        HashMap<String, Object> byProducts = new HashMap<>();
+        ArrayList<String> commandString = this.link.getCommand();
+        String command = commandString.as;
+
+        this.link.setByproducts(byProducts);
+    }
+
     public void setSignature() {
+    }
+
+    public HashMap<String, ?> commandObject() {
+        HashMap<String, String> object = new HashMap<>();
+        object.put("stderr", null);
+        object.put("stdout", null);
+        object.put("return value", null);
+        return object;
     }
 
 }
