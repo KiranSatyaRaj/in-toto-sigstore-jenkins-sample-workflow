@@ -5,14 +5,12 @@ import io.github.intoto.legacy.models.Link;
 import jakarta.validation.constraints.NotNull;
 import org.jetbrains.annotations.Contract;
 
-import java.io.File;
-import java.nio.file.Path;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 @SuppressWarnings("deprecated")
-public class GenerateLink extends Link {
+public class GenerateLink {
     @SuppressWarnings("deprecation")
     private final Link link;
 
@@ -20,7 +18,7 @@ public class GenerateLink extends Link {
         this.link = new Link(null, null, "step", null, null, null);
     }
 
-    public void generateMaterials(@NotNull String[] filePaths) {
+    public GenerateLink generateMaterials(@NotNull String[] filePaths) {
         HashMap<String, Artifact.ArtifactHash> materials;
         if (filePaths == null) {
             materials = new HashMap<>();
@@ -28,9 +26,10 @@ public class GenerateLink extends Link {
             materials = setArtifacts(filePaths);
         }
         this.link.setMaterials(materials);
+        return this;
     }
 
-    public void setProducts(@NotNull String[] filePaths) {
+    public GenerateLink setProducts(@NotNull String[] filePaths) {
         HashMap<String, Artifact.ArtifactHash> products;
         if (filePaths == null) {
             products = new HashMap<>();
@@ -38,6 +37,7 @@ public class GenerateLink extends Link {
             products = setArtifacts(filePaths);
         }
         this.link.setProducts(products);
+        return this;
     }
 
     private @org.jetbrains.annotations.NotNull HashMap<String, Artifact.ArtifactHash> setArtifacts(String[] filePaths) {
@@ -56,8 +56,9 @@ public class GenerateLink extends Link {
 
 
 
-    public void dump() {
+    public GenerateLink dump() {
         this.link.dump();
+        return this;
     }
 
     public String dumpString() {
@@ -79,23 +80,38 @@ public class GenerateLink extends Link {
         return filenames;
     }
 
-    public void setCommands(ArrayList<String> commands) {
+    public GenerateLink setCommands(ArrayList<String> commands) {
         this.link.setCommand(commands);
+        return this;
     }
 
-    public void setByProducts() {
-        HashMap<String, Object> byProducts = new HashMap<>();
-        ArrayList<String> commandString = this.link.getCommand();
-        String command = commandString.as;
-
-        this.link.setByproducts(byProducts);
+    public GenerateLink setByProducts(String filePath) {
+        HashMap<String, Object> byProducts = commandObject();
+        String[] cmdArray = this.link.getCommand().toArray(new String[link.getCommand().size()]);
+        try {
+            Process proc = Runtime.getRuntime().exec(cmdArray, null, new File("/home/username/in-toto-workflow/"));
+            StringBuilder stderr = new StringBuilder();
+            StringBuilder stdout = new StringBuilder();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+            stderr.append(reader.readLine());
+            reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+            stdout.append(reader.readLine());
+            int returnVal = proc.exitValue();
+            byProducts.put("stderr", stderr.toString());
+            byProducts.put("stdout", stdout.toString());
+            byProducts.put("return value", returnVal);
+            this.link.setByproducts(byProducts);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return this;
     }
 
     public void setSignature() {
     }
 
-    public HashMap<String, ?> commandObject() {
-        HashMap<String, String> object = new HashMap<>();
+    private HashMap<String, Object> commandObject() {
+        HashMap<String, Object> object = new HashMap<>();
         object.put("stderr", null);
         object.put("stdout", null);
         object.put("return value", null);
