@@ -120,3 +120,18 @@ public class GenerateLink {
     }
 
 }
+
+class NewLink extends Link {
+    public NewLink(
+            HashMap<String, Artifact.ArtifactHash> materials,
+            HashMap<String, Artifact.ArtifactHash> products,
+            String name,
+            HashMap<String, Object> environment,
+            ArrayList<String> command,
+            HashMap<String, Object> byproducts) {
+        super(materials, products, name, environment, command, byproducts);
+    }
+
+    public void sign() {
+    }
+}
