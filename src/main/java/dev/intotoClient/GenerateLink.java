@@ -2,6 +2,7 @@ package dev.intotoClient;
 
 import io.github.intoto.legacy.models.Artifact;
 import io.github.intoto.legacy.models.Link;
+import io.github.intoto.legacy.models.LinkSignable;
 import jakarta.validation.constraints.NotNull;
 import org.jetbrains.annotations.Contract;
 
@@ -118,4 +119,19 @@ public class GenerateLink {
         return object;
     }
 
+}
+
+class NewLink extends Link {
+    public NewLink(
+            HashMap<String, Artifact.ArtifactHash> materials,
+            HashMap<String, Artifact.ArtifactHash> products,
+            String name,
+            HashMap<String, Object> environment,
+            ArrayList<String> command,
+            HashMap<String, Object> byproducts) {
+        super(materials, products, name, environment, command, byproducts);
+    }
+
+    public void sign() {
+    }
 }
