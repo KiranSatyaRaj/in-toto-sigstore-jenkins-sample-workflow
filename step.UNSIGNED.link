@@ -1,0 +1,23 @@
+{
+  "signed": {
+    "materials": {},
+    "products": {
+      "foo.py": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "byproducts": {
+      "stdout": "null",
+      "stderr": "null",
+      "return value": 0
+    },
+    "environment": {},
+    "command": [
+      "touch",
+      "foo.py"
+    ],
+    "name": "step",
+    "_type": "link"
+  },
+  "signatures": []
+}
