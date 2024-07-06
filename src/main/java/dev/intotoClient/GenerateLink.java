@@ -86,10 +86,11 @@ public class GenerateLink {
     }
 
     public GenerateLink setByProducts(String filePath) {
+        String usrname = System.getenv("USERNAME");
         HashMap<String, Object> byProducts = commandObject();
         String[] cmdArray = this.link.getCommand().toArray(new String[link.getCommand().size()]);
         try {
-            Process proc = Runtime.getRuntime().exec(cmdArray, null, new File("/home/username/in-toto-workflow/"));
+            Process proc = Runtime.getRuntime().exec(cmdArray, null, new File("/home/" + usrname + "/in-toto-workflow/"));
             StringBuilder stderr = new StringBuilder();
             StringBuilder stdout = new StringBuilder();
             BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
