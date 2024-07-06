@@ -2,7 +2,6 @@ package dev.intotoClient;
 
 import io.github.intoto.legacy.models.Artifact;
 import io.github.intoto.legacy.models.Link;
-import io.github.intoto.legacy.models.LinkSignable;
 import jakarta.validation.constraints.NotNull;
 import org.jetbrains.annotations.Contract;
 
