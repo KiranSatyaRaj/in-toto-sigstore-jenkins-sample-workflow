@@ -1,6 +1,8 @@
 package dev;
 
 import dev.intotoClient.GenerateLink;
+import dev.sigstoreClient.SignArtifact;
+
 import java.util.ArrayList;
 
 public class Main {
@@ -10,14 +12,17 @@ public class Main {
         cmdArray.add("touch");
         cmdArray.add("foo.py");
         GenerateLink link = new GenerateLink();
+        String linkname = "test.link";
         link.generateMaterials(new String[]{})
                 .setCommands(cmdArray)
                 .setByProducts("/home/" + username + "/in-toto-workflow/")
                 .setProducts(new String[]{"/home/" + username + "/in-toto-workflow/foo.py"})
-                .dump();
-//        SignArtifact test = new SignArtifact("/home/username/workstation/github/in-toto/in-toto-sigstore-jenkins-sample-workflow/");
-//        test.initSigner();
-//        test.sign();
-//        System.out.println(test.result.toJson());
+                .dump(linkname);
+
+//        System.out.println(link);
+        SignArtifact test = new SignArtifact("/home/"+ username + "/workstation/github/in-toto/in-toto-sigstore-jenkins-sample-workflow/" + linkname);
+        test.initSigner();
+        test.signArtifact();
+        System.out.println(test.result.toJson());
     }
 }

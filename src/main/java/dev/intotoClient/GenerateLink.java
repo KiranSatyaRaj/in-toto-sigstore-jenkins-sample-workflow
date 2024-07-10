@@ -1,16 +1,20 @@
 package dev.intotoClient;
 
+import dev.sigstoreClient.SignArtifact;
 import io.github.intoto.legacy.models.Artifact;
 import io.github.intoto.legacy.models.Link;
 import jakarta.validation.constraints.NotNull;
 import org.jetbrains.annotations.Contract;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 @SuppressWarnings("deprecated")
 public class GenerateLink {
+
     @SuppressWarnings("deprecation")
     private final Link link;
 
@@ -56,8 +60,8 @@ public class GenerateLink {
 
 
 
-    public GenerateLink dump() {
-        this.link.dump();
+    public GenerateLink dump(String linkname) {
+        this.link.dump(linkname);
         return this;
     }
 
@@ -119,9 +123,15 @@ public class GenerateLink {
         return object;
     }
 
+//    public String sign() {
+//        this.link.sign();
+//        return this.link.getPayload();
+//    }
+
 }
 
 class NewLink extends Link {
+    public byte[] payload;
     public NewLink(
             HashMap<String, Artifact.ArtifactHash> materials,
             HashMap<String, Artifact.ArtifactHash> products,
@@ -130,8 +140,17 @@ class NewLink extends Link {
             ArrayList<String> command,
             HashMap<String, Object> byproducts) {
         super(materials, products, name, environment, command, byproducts);
+        this.payload = this.getCanonicalJSON(true).getBytes(StandardCharsets.UTF_8);
     }
 
-    public void sign() {
+//    public void sign() {
+//        SignArtifact test = new SignArtifact(this.getPayload().getBytes(StandardCharsets.UTF_8));
+//        test.initSigner();
+//        test.signArtifact();
+//    }
+
+    public String getPayload() {
+        this.payload = this.getCanonicalJSON(true).getBytes(StandardCharsets.UTF_8);
+        return Arrays.toString(new String[]{this.getCanonicalJSON(true)});
     }
 }

@@ -12,8 +12,8 @@ public class SignArtifact {
     public Bundle result;
     Path testArtifact;
 
-    public SignArtifact(String Path) {
-        this.testArtifact = Paths.get(Path);
+    public SignArtifact(String filePath) {
+        this.testArtifact = Paths.get(filePath);
     }
 
     public void initSigner() {
@@ -24,7 +24,7 @@ public class SignArtifact {
         }
     }
 
-    public void sign() {
+    public void signArtifact() {
         try {
             this.result = this.funcy.signFile(testArtifact);
         } catch (Exception e) {
