@@ -2,7 +2,6 @@ package dev;
 
 import dev.intotoClient.GenerateLink;
 import dev.sigstoreClient.SignArtifact;
-
 import java.util.ArrayList;
 
 public class Main {
@@ -23,6 +22,8 @@ public class Main {
         SignArtifact test = new SignArtifact("/home/"+ username + "/workstation/github/in-toto/in-toto-sigstore-jenkins-sample-workflow/" + linkname);
         test.initSigner();
         test.signArtifact();
-        System.out.println(test.result.toJson());
+//        PublicKey pubKey = test.result.getCertPath().getCertificates().getFirst().getPublicKey();
+        System.out.println(test.result.getCertPath().getCertificates().getFirst());
+
     }
 }
